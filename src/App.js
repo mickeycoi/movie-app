@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from "./components/Navbar";
+import { BrowserRouter } from "react-router-dom";
+import MovieCard from "./components/MovieCard";
+import Pagination from "@mui/material/Pagination";
+import FilterMovie from "./components/FilterMoive";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <FilterMovie />
+        <MovieCard />
+        <Pagination count={10} size="large" />
+      </BrowserRouter>
+    </>
   );
 }
-
-export default App;
