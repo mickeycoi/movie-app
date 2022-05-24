@@ -4,8 +4,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import apiService from "../app/apiService";
 import GetMovieData from "./GetMovieData";
+import { useNavigate } from "react-router-dom";
 
 export default function MovieGenres() {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -20,7 +22,6 @@ export default function MovieGenres() {
       try {
         const res = await apiService.get(GetMovieData.GenresMenu);
         setGenres(res.data.genres);
-        console.log("genre:", res.data.genres);
       } catch (error) {
         console.log("error:", error);
       }
@@ -37,7 +38,7 @@ export default function MovieGenres() {
         onClick={handleClick}
         sx={{ color: "black" }}
       >
-        GENRE
+        GENRES
       </Button>
       <Menu
         id="basic-menu"
@@ -49,7 +50,10 @@ export default function MovieGenres() {
         }}
       >
         {genres.map((genre) => (
-          <MenuItem onClick={handleClose} key={genre.id}>
+          <MenuItem
+            onClick={() => navigate(`/genre/${genre.id}`)}
+            key={genre.id}
+          >
             {genre.name}
           </MenuItem>
         ))}

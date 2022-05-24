@@ -4,6 +4,7 @@ import React from "react";
 import { FTextField } from "./form";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { useSearchParams } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -47,6 +48,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 function MovieSearch() {
+  let [searchParams, setSearchParams] = useSearchParams();
   return (
     <Search>
       <SearchIconWrapper>
@@ -55,6 +57,15 @@ function MovieSearch() {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
+        value={searchParams.get("filter") || ""}
+        onChange={(event) => {
+          let filter = event.target.value;
+          if (filter) {
+            setSearchParams({ filter });
+          } else {
+            setSearchParams({});
+          }
+        }}
       />
     </Search>
   );

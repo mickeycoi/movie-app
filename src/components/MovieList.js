@@ -3,28 +3,25 @@ import { Grid } from "@mui/material";
 import MovieCard from "./MovieCard";
 import apiService from "../app/apiService";
 import GetMovieData from "./GetMovieData";
+import { useSearchParams } from "react-router-dom";
 
-function MovieList() {
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await apiService.get(GetMovieData.ActionMovies);
-        setMovies(res.data.results);
-        console.log("dataMovie:", res.data.results);
-      } catch (error) {
-        console.log("error:", error);
-      }
-    };
-    getData();
-  }, []);
+function MovieList({ movies }) {
+  let [searchParams, setSearchParams] = useSearchParams();
   return (
     <Grid container spacing={2} mt={1}>
-      {movies.map((movie) => (
-        <Grid key={movie.id} item xs={12} sm={6} md={4} lg={1.5}>
-          <MovieCard movie={movie} />
-        </Grid>
-      ))}
+      {movies &&
+        movies
+          .filter((movie) => {
+            let filter = searchParams.get("filter");
+            if (!filter) return true;
+            let name = movie.original_title.toLowerCase();
+            return name.includes(filter.toLowerCase());
+          })
+          .map((movie) => (
+            <Grid key={movie.id} item xs={12} sm={6} md={3} lg={2.4}>
+              <MovieCard movie={movie} />
+            </Grid>
+          ))}
     </Grid>
   );
 }

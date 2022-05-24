@@ -10,9 +10,17 @@ import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MovieGenres from "../components/MovieGenres";
 import MovieSearch from "../components/MovieSearch";
+import { FormProvider } from "../components/form";
+import { useForm } from "react-hook-form";
 
 function MainHeader() {
   let navigate = useNavigate();
+  const defaultValues = { searchQuery: "" };
+  const methods = useForm({
+    defaultValues,
+  });
+  const { watch, reset } = methods;
+
   return (
     <Box>
       <AppBar position="static">
@@ -27,7 +35,9 @@ function MainHeader() {
           </IconButton>
           <MovieGenres />
           <Box sx={{ flexGrow: 1 }} />
-          <MovieSearch />
+          <FormProvider methods={methods}>
+            <MovieSearch />
+          </FormProvider>
           <IconButton
             size="large"
             aria-label="account of current user"
