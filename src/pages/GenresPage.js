@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -6,11 +6,16 @@ import apiService from "../app/apiService";
 import GetMovieData from "../components/GetMovieData";
 import MovieCard from "../components/MovieCard";
 import MovieList from "../components/MovieList";
+import PaginationMovie from "../components/PaginationMovie";
+import LoadingScreen from "../components/LoadingScreen";
+import { Alert } from "@mui/material";
 
 function GenresPage() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [pages, setPages] = useState(1);
+  const [genres, setGenres] = useState([]);
 
   const params = useParams();
   console.log("paramsGenres", params);
@@ -22,9 +27,15 @@ function GenresPage() {
         setLoading(true);
         try {
           const res = await apiService.get(
-            GetMovieData.DicoverMovies + `&with_genres=${params.genreId}`
+            GetMovieData.DicoverMovies +
+              `&with_genres=${params.genreId}&page=${pages}`
           );
-          console.log("genreslMovie:", res.data);
+          const resGen = await apiService.get(GetMovieData.GenresMenu);
+          setGenres(resGen.data.genres);
+          console.log(
+            "genreslMovie:",
+            resGen.data.genres.filter((item) => item.id === params.genreId)
+          );
           setMovies(res.data.results);
           setError("");
         } catch (error) {
@@ -35,38 +46,46 @@ function GenresPage() {
       };
       getData();
     }
-  }, [params]);
-  const [genres, setGenres] = useState([]);
-  useEffect(() => {
-    const getGenres = async () => {
-      try {
-        const res = await apiService.get(GetMovieData.GenresMenu);
-        setGenres(res.data.genres);
-      } catch (error) {
-        console.log("error:", error);
-      }
-    };
-    getGenres();
-  }, []);
+  }, [params, pages]);
 
   return (
-    <Box sx={{ mt: 2 }}>
-      <Typography variant="h4">
-        {genres.forEach((item) =>
-          item.id === params.genreId ? `${item.name}` : "hix"
-        )}
-      </Typography>
-      <Grid container spacing={2} mt={1}>
-        {movies &&
-          movies.map((movie) => (
+    <>
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <>
+          {error ? (
+            <Alert severity="error">{error}</Alert>
+          ) : (
             <>
-              <Grid key={movie.id} item xs={12} sm={6} md={3} lg={2.4}>
-                <MovieCard movie={movie} />
-              </Grid>
+              {movies && (
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="h4"> Genres Movie</Typography>
+                  <Grid container spacing={2} mt={1}>
+                    {movies &&
+                      movies.map((movie) => (
+                        <>
+                          <Grid
+                            key={movie.id}
+                            item
+                            xs={12}
+                            sm={6}
+                            md={3}
+                            lg={2.4}
+                          >
+                            <MovieCard movie={movie} />
+                          </Grid>
+                        </>
+                      ))}
+                  </Grid>
+                  <PaginationMovie page={pages} setPage={setPages} />
+                </Box>
+              )}
             </>
-          ))}
-      </Grid>
-    </Box>
+          )}
+        </>
+      )}
+    </>
   );
 }
 

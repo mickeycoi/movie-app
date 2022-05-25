@@ -17,7 +17,7 @@ export default function MovieCard({ movie }) {
   const location = useLocation();
   return (
     <>
-      <Card sx={{ maxWidth: 350 }}>
+      <Card sx={{ maxWidth: 200 }}>
         <Link
           to={`/movie/${movie.id}`}
           state={{ backgroundLocation: location }}
@@ -31,9 +31,9 @@ export default function MovieCard({ movie }) {
           />
 
           <CardContent>
-            <Typography variant="body2" col1or="text.secondary">
+            <Typography variant="body2" color="text.secondary" wrap="nowrap">
               {movie.original_title.length > 20
-                ? `${movie.original_title.slice(0, 20)}...`
+                ? `${movie.original_title.slice(0, 15)}...`
                 : `${movie.original_title}`}
             </Typography>
           </CardContent>

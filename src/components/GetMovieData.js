@@ -5,5 +5,6 @@ const GetMovieData = {
   DicoverMovies: `/discover/movie?api_key=${API_KEY}`,
   ImageMovies: `https://image.tmdb.org/t/p/`,
   GenresMenu: `/genre/movie/list?api_key=${API_KEY}`,
+  SearchMovie: `/search/movie?api_key=${API_KEY}`,
 };
 export default GetMovieData;
