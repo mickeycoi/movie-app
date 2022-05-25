@@ -12,6 +12,7 @@ import MovieGenres from "../components/MovieGenres";
 import MovieSearch from "../components/MovieSearch";
 import { FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
+import Darkmode from "../components/Darkmode";
 
 function MainHeader() {
   let navigate = useNavigate();
@@ -38,6 +39,7 @@ function MainHeader() {
           <FormProvider methods={methods}>
             <MovieSearch />
           </FormProvider>
+
           <IconButton
             size="large"
             aria-label="account of current user"

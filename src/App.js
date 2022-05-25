@@ -5,23 +5,30 @@ import GenresPage from "./pages/GenresPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ModalMoviePage from "./pages/ModalMoviePage";
+import ThemeProvider from "./contexts/ThemeProvider";
 
 export default function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="movie/:movieId" element={<DetailPage />} />
-            <Route path="genre/:genreId" element={<GenresPage />} />
-            <Route path="search/:query" element={<GenresPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-        <Routes>
-          <Route path="/movie/:movieId" element={<ModalMoviePage />} />
-        </Routes>
+        <ThemeProvider>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="movie/:movieId" element={<DetailPage />} />
+              <Route path="movie/:movieId/trailer" element={<DetailPage />} />
+              <Route path="genre/:genreId" element={<GenresPage />} />
+              <Route path="search/:query" element={<GenresPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
+          </Routes>
+          <Routes>
+            <Route
+              path="/movie/:movieId/trailer"
+              element={<ModalMoviePage />}
+            />
+          </Routes>
+        </ThemeProvider>
       </BrowserRouter>
     </>
   );

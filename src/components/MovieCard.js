@@ -36,17 +36,20 @@ export default function MovieCard({ movie }) {
                 ? `${movie.original_title.slice(0, 15)}...`
                 : `${movie.original_title}`}
             </Typography>
+            <Typography variant="body2" color="text.secondary" wrap="nowrap">
+              {movie.release_date.slice(0, 4)}
+            </Typography>
           </CardContent>
         </Link>
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites" size="small">
-            <FavoriteIcon />
+            <FavoriteIcon sx={{ color: "#dd3333" }} />
           </IconButton>
           <IconButton aria-label="share" size="small">
             <ShareIcon />
           </IconButton>
           <IconButton aria-label="share" size="small">
-            <StarRateIcon />
+            <StarRateIcon sx={{ color: "#faaf00" }} />
             {movie.vote_average}
           </IconButton>
         </CardActions>

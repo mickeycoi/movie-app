@@ -45,16 +45,13 @@ const style = {
 };
 
 export default function ModalMoviePage() {
-  const location = useLocation();
-  console.log("location:", location);
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname || `/`;
 
   const [open, setOpen] = React.useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    navigate(from, { replace: true });
+    navigate(-1);
   };
 
   const [movie, setMovie] = useState([]);
@@ -71,10 +68,13 @@ export default function ModalMoviePage() {
             `/movie/${params.movieId}/videos?api_key=8d6f0cb4fe35f27fc39124f100bbb18d&language=en-US`
           );
           setMovie(
+            res.data.results.filter((item) => item.name.includes("Trailer"))
+          );
+          console.log(
+            "modalmovie",
             res.data.results.filter(
               (item) =>
-                item.name === "Final Trailer" ||
-                item.name === "Official Trailer"
+                item.name.includes("Final ") || item.name.includes("Official ")
             )
           );
 
@@ -91,6 +91,7 @@ export default function ModalMoviePage() {
 
   return (
     <Modal
+      keepMounted={false}
       open={true}
       onClose={() => handleClose()}
       aria-labelledby="modal-modal-title"
@@ -110,21 +111,39 @@ export default function ModalMoviePage() {
             <Alert severity="error">{error}</Alert>
           ) : (
             <>
-              <Box
-                sx={{
-                  margin: "auto",
-                  width: "700px",
-                  height: "calc(700px * 10/16)",
-                  display: "flex",
-                }}
-              >
-                <iframe
-                  title="Trailer"
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${movie[0].key}`}
-                ></iframe>
-              </Box>
+              {movie[0].key ? (
+                <>
+                  <Box
+                    sx={{
+                      margin: "auto",
+                      width: "700px",
+                      height: "calc(700px * 10/16)",
+                      display: "flex",
+                    }}
+                  >
+                    <iframe
+                      title="Trailer"
+                      width="100%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${movie[0].key}`}
+                    ></iframe>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <Typography
+                    variant="h1"
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "#faaf00",
+                    }}
+                  >
+                    OPP! Nothing here
+                  </Typography>
+                </>
+              )}
             </>
           )}
         </>

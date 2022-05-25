@@ -52,6 +52,7 @@ function DetailPage() {
           );
 
           setMovie(res.data);
+          console.log("datamovie", res.data);
           setRecMovie(resRec.data.results);
           setError("");
         } catch (error) {
@@ -126,6 +127,7 @@ function DetailPage() {
                                     label={item.name}
                                     variant="outlined"
                                     size="small"
+                                    sx={{ ml: 1 }}
                                   />
                                 </RouterLink>
                               </Stack>
@@ -144,6 +146,7 @@ function DetailPage() {
                               label={movie.release_date}
                               variant="outlined"
                               size="small"
+                              sx={{ ml: 1 }}
                             />
                           </Typography>
                           <Typography
@@ -161,6 +164,7 @@ function DetailPage() {
                                   label={item.name}
                                   variant="outlined"
                                   size="small"
+                                  sx={{ ml: 1 }}
                                 />
                               </Stack>
                             ))}
@@ -180,29 +184,35 @@ function DetailPage() {
                                   label={item.name}
                                   variant="outlined"
                                   size="small"
+                                  sx={{ ml: 1 }}
                                 />
                               </Stack>
                             ))}
                           </Typography>
-                          <RouterLink
-                            to={`/movie/${params.movieId}`}
+
+                          <Button
+                            variant="contained"
+                            startIcon={<PlayCircleFilledWhiteIcon />}
+                            component={RouterLink}
+                            to={`/movie/${params.movieId}/trailer`}
                             state={{ backgroundLocation: location }}
                             style={{
                               textDecoration: "none",
+                              backgroundColor: "#faaf00",
                             }}
+                            disabled={
+                              movie.release_date.slice(0, 4) < 1960
+                                ? true
+                                : false
+                            }
                           >
-                            <Button
-                              variant="contained"
-                              startIcon={<PlayCircleFilledWhiteIcon />}
-                            >
-                              Trailer
-                            </Button>
-                          </RouterLink>
+                            Trailer
+                          </Button>
                         </CardContent>
                       </Box>
                     </Box>
                     <Box sx={{ mt: 2 }}>
-                      <Typography variant="body1">You may aslo like</Typography>
+                      <Typography variant="h4">You may aslo like</Typography>
                       <Divider />
                       <Grid container spacing={2} mt={1} wrap="nowrap">
                         {recMovie.slice(0, 3).map((movie) => (

@@ -36,7 +36,7 @@ export default function MovieGenres() {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        sx={{ color: "white" }}
+        sx={{ color: "#FFF" }}
       >
         GENRES
       </Button>
