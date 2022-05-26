@@ -68,8 +68,8 @@ function GenresPage() {
                           <Grid
                             key={movie.id}
                             item
-                            xs={12}
-                            sm={6}
+                            xs={6}
+                            sm={4}
                             md={3}
                             lg={2.4}
                           >

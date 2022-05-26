@@ -19,7 +19,6 @@ function HomePage() {
           GetMovieData.DicoverMovies + `&page=${pages}`
         );
         setMovies(res.data.results);
-
         setError("");
       } catch (error) {
         console.log("error:", error);

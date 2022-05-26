@@ -31,12 +31,10 @@ export default function MovieCard({ movie }) {
           />
 
           <CardContent>
-            <Typography variant="body2" color="text.secondary" wrap="nowrap">
-              {movie.original_title.length > 20
-                ? `${movie.original_title.slice(0, 15)}...`
-                : `${movie.original_title}`}
+            <Typography variant="body1" color="text.secondary" noWrap="true">
+              {movie.title}
             </Typography>
-            <Typography variant="body2" color="text.secondary" wrap="nowrap">
+            <Typography variant="caption" color="text.secondary" wrap="nowrap">
               {movie.release_date.slice(0, 4)}
             </Typography>
           </CardContent>
@@ -50,7 +48,7 @@ export default function MovieCard({ movie }) {
           </IconButton>
           <IconButton aria-label="share" size="small">
             <StarRateIcon sx={{ color: "#faaf00" }} />
-            {movie.vote_average}
+            {movie.vote_average.toFixed(1)}
           </IconButton>
         </CardActions>
       </Card>

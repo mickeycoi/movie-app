@@ -18,7 +18,7 @@ function MovieList({ movies }) {
             return name.includes(filter.toLowerCase());
           })
           .map((movie) => (
-            <Grid key={movie.id} item xs={12} sm={6} md={3} lg={2.4}>
+            <Grid key={movie.id} item xs={6} sm={4} md={3} lg={2.4}>
               <MovieCard movie={movie} />
             </Grid>
           ))}

@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ModalMoviePage from "./pages/ModalMoviePage";
 import ThemeProvider from "./contexts/ThemeProvider";
+import SearchPage from "./pages/SearchPage";
 
 export default function App() {
   return (
@@ -18,7 +19,7 @@ export default function App() {
               <Route path="movie/:movieId" element={<DetailPage />} />
               <Route path="movie/:movieId/trailer" element={<DetailPage />} />
               <Route path="genre/:genreId" element={<GenresPage />} />
-              <Route path="search/:query" element={<GenresPage />} />
+              <Route path="search" element={<SearchPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>

@@ -78,34 +78,37 @@ function DetailPage() {
               <>
                 {movie && (
                   <>
-                    <Box sx={{ display: "flex" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                      }}
+                    >
                       <Box maxWidth={350} minWidth={200}>
                         <CardMedia
-                          sx={{ borderRadius: 2 }}
+                          sx={{ borderRadius: 2, pt: 3 }}
                           component="img"
                           height="auto"
                           image={
                             GetMovieData.ImageMovies +
                             `/w500/${movie.poster_path}`
                           }
-                          alt={movie.original_title}
+                          alt={movie.title}
                         />
                       </Box>
                       <Box>
                         <CardContent>
-                          <Typography variant="h3">
-                            {movie.original_title}
-                          </Typography>
+                          <Typography variant="h3">{movie.title}</Typography>
                           <Rating
                             name="half-rating-read"
                             defaultValue={movie.vote_average / 2}
                             precision={0.5}
                             readOnly
                           />
-                          <Typography variant="body1">
+                          <Typography variant="body2" sx={{ mt: 1, mb: 3 }}>
                             {movie.overview}
                           </Typography>
                           <Typography
+                            variant="subtitle1"
                             sx={{
                               display: "flex",
                               justifyContent: "start",
@@ -113,7 +116,7 @@ function DetailPage() {
                               mb: 1,
                             }}
                           >
-                            Genres:
+                            Genres :
                             {movie.genres.map((item) => (
                               <Stack direction="row" spacing={1} key={item.id}>
                                 <RouterLink
@@ -134,6 +137,7 @@ function DetailPage() {
                             ))}
                           </Typography>
                           <Typography
+                            variant="subtitle1"
                             sx={{
                               display: "flex",
                               justifyContent: "start",
@@ -150,6 +154,7 @@ function DetailPage() {
                             />
                           </Typography>
                           <Typography
+                            variant="subtitle1"
                             sx={{
                               display: "flex",
                               justifyContent: "start",
@@ -170,6 +175,7 @@ function DetailPage() {
                             ))}
                           </Typography>
                           <Typography
+                            variant="subtitle1"
                             sx={{
                               display: "flex",
                               justifyContent: "start",
@@ -177,7 +183,7 @@ function DetailPage() {
                               mb: 1,
                             }}
                           >
-                            Production:
+                            Production :
                             {movie.production_companies.map((item) => (
                               <Stack direction="row" spacing={1} key={item.id}>
                                 <Chip
