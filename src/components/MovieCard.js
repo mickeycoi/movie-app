@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Card from "@mui/material/Card";
 import { useNavigate, Link, useLocation } from "react-router-dom";
@@ -15,6 +15,13 @@ import GetMovieData from "./GetMovieData";
 export default function MovieCard({ movie }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [favorarite, setFavorite] = useState(
+    () => window.localStorage.getItem(`favorite${movie.id}`) || "white"
+  );
+  useEffect(() => {
+    window.localStorage.setItem(`favorite${movie.id}`, favorarite);
+  }, [favorarite]);
+
   return (
     <>
       <Card sx={{ maxWidth: 200 }}>
@@ -41,7 +48,14 @@ export default function MovieCard({ movie }) {
         </Link>
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites" size="small">
-            <FavoriteIcon sx={{ color: "#dd3333" }} />
+            <FavoriteIcon
+              onClick={() =>
+                setFavorite(() =>
+                  favorarite === "white" ? "#dd3333" : "white"
+                )
+              }
+              sx={{ color: `${favorarite}` }}
+            />
           </IconButton>
           <IconButton aria-label="share" size="small">
             <ShareIcon />

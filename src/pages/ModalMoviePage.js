@@ -68,7 +68,7 @@ export default function ModalMoviePage() {
             `/movie/${params.movieId}/videos?api_key=8d6f0cb4fe35f27fc39124f100bbb18d&language=en-US`
           );
           setMovie(
-            res.data.results.filter((item) => item.name.includes("Trailer"))
+            res.data.results.filter((item) => item.type.includes("Trailer"))
           );
           console.log(
             "modalmovie",

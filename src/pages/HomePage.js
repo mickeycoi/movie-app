@@ -18,7 +18,7 @@ function HomePage() {
         const res = await apiService.get(
           GetMovieData.DicoverMovies + `&page=${pages}`
         );
-        setMovies(res.data.results);
+        setMovies(res.data);
         setError("");
       } catch (error) {
         console.log("error:", error);
@@ -28,8 +28,6 @@ function HomePage() {
     };
     getData();
   }, [pages]);
-  const limit = 20;
-  const pageCount = Math.ceil(movies.length / limit);
 
   return (
     <>
@@ -44,8 +42,12 @@ function HomePage() {
             <>
               {movies && (
                 <>
-                  <MovieList movies={movies} />
-                  <PaginationMovie page={pages} setPage={setPages} />
+                  <MovieList movies={movies.results} />
+                  <PaginationMovie
+                    page={pages}
+                    setPage={setPages}
+                    count={500}
+                  />
                 </>
               )}
             </>

@@ -18,7 +18,7 @@ function GenresPage() {
   const [genres, setGenres] = useState([]);
 
   const params = useParams();
-  console.log("paramsGenres", params);
+
   const API_KEY = "8d6f0cb4fe35f27fc39124f100bbb18d";
 
   useEffect(() => {
@@ -30,13 +30,10 @@ function GenresPage() {
             GetMovieData.DicoverMovies +
               `&with_genres=${params.genreId}&page=${pages}`
           );
+
           const resGen = await apiService.get(GetMovieData.GenresMenu);
+          setMovies(res.data);
           setGenres(resGen.data.genres);
-          console.log(
-            "genreslMovie:",
-            resGen.data.genres.filter((item) => item.id === params.genreId)
-          );
-          setMovies(res.data.results);
           setError("");
         } catch (error) {
           console.log(error);
@@ -47,7 +44,7 @@ function GenresPage() {
       getData();
     }
   }, [params, pages]);
-
+  
   return (
     <>
       {loading ? (
@@ -60,25 +57,20 @@ function GenresPage() {
             <>
               {movies && (
                 <Box sx={{ mt: 2 }}>
-                  <Typography variant="h4"> Genres Movie</Typography>
-                  <Grid container spacing={2} mt={1}>
-                    {movies &&
-                      movies.map((movie) => (
-                        <>
-                          <Grid
-                            key={movie.id}
-                            item
-                            xs={6}
-                            sm={4}
-                            md={3}
-                            lg={2.4}
-                          >
-                            <MovieCard movie={movie} />
-                          </Grid>
-                        </>
-                      ))}
-                  </Grid>
-                  <PaginationMovie page={pages} setPage={setPages} />
+                  <Typography variant="h4">
+                    {
+                      genres.find((item) =>
+                        item.id === Number(params.genreId) ? item.name : ""
+                      ).name
+                    }{" "}
+                    Movie
+                  </Typography>
+                  <MovieList movies={movies.results} />
+                  <PaginationMovie
+                    page={pages}
+                    setPage={setPages}
+                    count={500}
+                  />
                 </Box>
               )}
             </>

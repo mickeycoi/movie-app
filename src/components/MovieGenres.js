@@ -48,6 +48,7 @@ export default function MovieGenres() {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        sx={{ border: "1px solid red" }}
       >
         {genres.map((genre) => (
           <MenuItem

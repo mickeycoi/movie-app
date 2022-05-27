@@ -36,7 +36,6 @@ function DetailPage() {
   const [error, setError] = useState("");
   const location = useLocation();
   const params = useParams();
-  console.log("params", params);
   const API_KEY = "8d6f0cb4fe35f27fc39124f100bbb18d";
 
   useEffect(() => {
@@ -52,7 +51,6 @@ function DetailPage() {
           );
 
           setMovie(res.data);
-          console.log("datamovie", res.data);
           setRecMovie(resRec.data.results);
           setError("");
         } catch (error) {

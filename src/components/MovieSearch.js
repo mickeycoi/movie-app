@@ -4,9 +4,10 @@ import React from "react";
 import { FTextField } from "./form";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
+import { useForm } from "react-hook-form";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -48,44 +49,46 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-function QueryNavLink({ to, ...props }) {
-  let location = useLocation();
-  return <Link to={to + location.search} {...props} />;
-}
 
 function MovieSearch() {
   let [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const location = useLocation();
+  let navigate = useNavigate();
+  let location = useLocation();
+
+  const { handleSubmit } = useForm();
+  const onSubmit = async (data) => {
+    console.log(data);
+  };
   return (
     <>
       <Search>
-        <Button
-          size="small"
-          sx={{
-            color: "white",
-          }}
-          component={Link}
-          to={`/search?keymovie=${searchParams}`}
-          disabled={searchParams.get("keymovie") ? false : true}
-        >
-          <SearchIcon />
-        </Button>
-        <StyledInputBase
-          placeholder="Search a movie…"
-          value={searchParams.get("keymovie") || ""}
-          onChange={(event) => {
-            let keymovie = event.target.value;
-            console.log("change", event.target.value);
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Button
+            type="submit"
+            size="small"
+            sx={{
+              color: "white",
+            }}
+            component={Link}
+            to={`/search?keymovie=${searchParams.get("keymovie")}`}
+            disabled={searchParams.get("keymovie") ? false : true}
+            startIcon={<SearchIcon />}
+          />
 
-            if (keymovie) {
-              setSearchParams({ keymovie });
-              console.log("searchpr", searchParams.get("keymovie"));
-            } else {
-              setSearchParams({});
-            }
-          }}
-        />
+          <StyledInputBase
+            placeholder="Search a movie…"
+            value={searchParams.get("keymovie") || ""}
+            onChange={(event) => {
+              let keymovie = event.target.value;
+
+              if (keymovie) {
+                setSearchParams({ keymovie });
+              } else {
+                setSearchParams({});
+              }
+            }}
+          />
+        </form>
       </Search>
     </>
   );
